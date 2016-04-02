@@ -2,7 +2,7 @@
 layout: post
 title:  "mozilla web workers 改动"
 date:   2rd Apr. 2016
-categories: 对于MDN创建一个通用的 「异步 eval()」例子的改动
+categories: the Change of MDN Web Workers 'asyncEval' Example
 ---
 
 在学习web workers时看了MDN上的文档
