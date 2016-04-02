@@ -1,0 +1,47 @@
+<p>﻿—
+layout: post
+title:  “mozilla web workers 改动”
+date:   2rd Apr. 2016
+对于MDN创建一个通用的 「异步 eval()」例子的改动
+—</p>
+
+<p>在学习web workers时看了MDN上的文档
+https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers
+里面提到了一个这样的例子用来创建通用的 「异步 eval()」</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// Syntax: asyncEval(code[, listener])</span>
+
+<span class="kd">var</span> <span class="nx">asyncEval</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">aListeners</span> <span class="o">=</span> <span class="p">[],</span> <span class="nx">oParser</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Worker</span><span class="p">(</span><span class="s2">&quot;data:text/javascript;charset=US-ASCII,onmessage%20%3D%20function%20%28oEvent%29%20%7B%0A%09postMessage%28%7B%0A%09%09%22id%22%3A%20oEvent.data.id%2C%0A%09%09%22evaluated%22%3A%20eval%28oEvent.data.code%29%0A%09%7D%29%3B%0A%7D&quot;</span><span class="p">);</span>
+
+  <span class="nx">oParser</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">oEvent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">aListeners</span><span class="p">[</span><span class="nx">oEvent</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">id</span><span class="p">])</span> <span class="p">{</span> <span class="nx">aListeners</span><span class="p">[</span><span class="nx">oEvent</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">id</span><span class="p">](</span><span class="nx">oEvent</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">evaluated</span><span class="p">);</span> <span class="p">}</span>
+    <span class="k">delete</span> <span class="nx">aListeners</span><span class="p">[</span><span class="nx">oEvent</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">id</span><span class="p">];</span>
+  <span class="p">};</span>
+
+
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">sCode</span><span class="p">,</span> <span class="nx">fListener</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">aListeners</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">fListener</span> <span class="o">||</span> <span class="kc">null</span><span class="p">);</span>
+    <span class="nx">oParser</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span>
+      <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">aListeners</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;code&quot;</span><span class="o">:</span> <span class="nx">sCode</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+
+<span class="p">})();</span></code></pre></figure>
+
+<ul>
+  <li>`</li>
+</ul>
+
+<hr />
+<p>##</p>
+
+<ol>
+  <li>标题</li>
+</ol>
+
+<p>##</p>
+
+<p>`</p>
