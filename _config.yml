@@ -3,7 +3,8 @@ description: I've just built this site... Some other information will be filled 
 meta_description: "Your New Jekyll Site, Blogging about stuffs"
 
 markdown: kramdown
-highlighter: pygments
+# highlighter: pygments
+highlighter: rouge
 logo: false
 paginate: 15
 baseurl: /
